@@ -14,9 +14,8 @@ void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
 
-    Widget testWidget = new MediaQuery(
-        data: new MediaQueryData(),
-        child: new MaterialApp(home: new MyHomePage()));
+    Widget testWidget = const MediaQuery(
+        data: MediaQueryData(), child: MaterialApp(home: MyHomePage()));
     await tester.pumpWidget(testWidget);
 
     // Verify that our counter starts at 0.

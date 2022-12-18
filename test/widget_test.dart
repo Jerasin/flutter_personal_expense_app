@@ -13,7 +13,11 @@ import 'package:personal_expense_app/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyHomePage());
+
+    Widget testWidget = new MediaQuery(
+        data: new MediaQueryData(),
+        child: new MaterialApp(home: new MyHomePage()));
+    await tester.pumpWidget(testWidget);
 
     // Verify that our counter starts at 0.
     // expect(find.text('0'), findsOneWidget);

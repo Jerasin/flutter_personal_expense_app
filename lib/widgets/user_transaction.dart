@@ -50,9 +50,9 @@ class _UserTransactionState extends State<UserTransaction> {
     return Column(
       children: <Widget>[
         FormTransaction(fn: addTransaction),
-        PersonalCardList(
-          transactions: _userTransactions,
-        ),
+        // PersonalCardList(
+        //   transactions: _userTransactions,
+        // ),
       ],
     );
   }

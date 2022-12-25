@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
 import './personal_card.dart';
+import 'package:intl/intl.dart';
 
 class PersonalCardList extends StatelessWidget {
   final List<Transaction> transactions;
-  const PersonalCardList({Key? key, required this.transactions})
+  final Function fnDeleteTransaction;
+  const PersonalCardList(
+      {Key? key, required this.transactions, required this.fnDeleteTransaction})
       : super(key: key);
 
   @override
@@ -21,7 +24,7 @@ class PersonalCardList extends StatelessWidget {
                     'No Transaction added yet!',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
@@ -32,11 +35,41 @@ class PersonalCardList extends StatelessWidget {
               )
             : ListView.builder(
                 itemBuilder: ((context, index) {
-                  return PersonalCard(
-                    amount: transactions[index].amount,
-                    date: transactions[index].date,
-                    title: transactions[index].title,
+                  return Card(
+                    elevation: 5,
+                    margin:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: FittedBox(
+                              child: Text('\$${transactions[index].amount}')),
+                        ),
+                      ),
+                      title: Text(
+                        transactions[index].title,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      subtitle: Text(
+                        DateFormat.yMMMMd().format(transactions[index].date),
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                      trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
+                          fnDeleteTransaction(transactions[index].id);
+                        },
+                        color: Theme.of(context).errorColor,
+                      ),
+                    ),
                   );
+                  // return PersonalCard(
+                  //   amount: transactions[index].amount,
+                  //   date: transactions[index].date,
+                  //   title: transactions[index].title,
+                  // );
                 }),
                 itemCount: transactions.length,
                 // children: transactions

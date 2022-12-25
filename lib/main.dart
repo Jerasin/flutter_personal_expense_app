@@ -12,6 +12,7 @@ void main() => {
         title: 'Personal Expenses1',
         theme: ThemeData(
           primarySwatch: Colors.purple,
+          errorColor: Colors.red,
           colorScheme:
               ColorScheme.fromSwatch().copyWith(secondary: Colors.yellow),
           fontFamily: 'Quicksand',
@@ -41,24 +42,24 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-        id: "t1", title: "New Computer", amount: 69.99, date: DateTime.now()),
-    Transaction(
-        id: "t2", title: "New Shoes", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t3", title: "New Game", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t4", title: "New Telephone", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t5", title: "New Airpod", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t6", title: "New Iphone", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t7", title: "New Car", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t8", title: "New Home", amount: 59.99, date: DateTime.now()),
-    Transaction(
-        id: "t2", title: "New T-Shirt", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t1", title: "New Computer", amount: 69.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t2", title: "New Shoes", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t3", title: "New Game", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t4", title: "New Telephone", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t5", title: "New Airpod", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t6", title: "New Iphone", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t7", title: "New Car", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t8", title: "New Home", amount: 59.99, date: DateTime.now()),
+    // Transaction(
+    //     id: "t2", title: "New T-Shirt", amount: 59.99, date: DateTime.now()),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -72,10 +73,19 @@ class _MyHomePageState extends State<MyHomePage> {
       required String title,
       required double amount,
       required DateTime date}) {
-    var newTransaction =
-        Transaction(id: id, title: title, amount: amount, date: date);
+    var newTransaction = Transaction(
+        id: DateTime.now().toString(),
+        title: title,
+        amount: amount,
+        date: date);
     setState(() {
       _userTransactions.add(newTransaction);
+    });
+  }
+
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
     });
   }
 
@@ -95,6 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: const Text(
           'Personal Expenses',
         ),
@@ -114,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Chart(recentTransaction: _recentTransactions),
               PersonalCardList(
                 transactions: _userTransactions,
+                fnDeleteTransaction: _deleteTransaction,
               ),
             ]),
       ),
